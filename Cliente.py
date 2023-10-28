@@ -1,10 +1,12 @@
 import socket
 import threading
+import time
 
 def send_message(client_socket):
     while True:
         message = input("Cliente pergunta: ")
         client_socket.send(message.encode('utf-8'))
+        time.sleep(2)
 
 def receive_response(client_socket):
     while True:
