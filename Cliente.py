@@ -15,15 +15,18 @@ def send_message(client_socket):
 # função receber e imprimir respostas do servidor em um cliente
 def receive_response(client_socket):
     while True:
+        tempo_inicio = time.time()
         response = client_socket.recv(1024)
         print(response.decode("utf-8"))
+        tempo_fim = time.time()
+        tempo = tempo_fim - tempo_inicio
+        print("O tempo de resposta entre a sua pergunta e o servidor foi de: %.2f ms"%tempo)
 
 
 # Função para configurar o cliente
 def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(("127.0.0.1", 8888))
-
     send_thread = threading.Thread(target=send_message, args=(client,))
     receive_thread = threading.Thread(target=receive_response, args=(client,))
 
